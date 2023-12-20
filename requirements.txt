@@ -1,3 +1,4 @@
 Flask
 Gunicorn
-openai
+openai==0.28
+

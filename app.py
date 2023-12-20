@@ -6,8 +6,8 @@ app = Flask(__name__)
  
 openai.api_key = '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'
 
- 
 story = """Once upon a time in a small village, there lived a young girl named Lily"""
+ 
 
  
 def answer_question(question):

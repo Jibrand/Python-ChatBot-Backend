@@ -5,8 +5,7 @@ import os
 app = Flask(__name__)
 
 
-#openai.api_key = os.environ.get('openaii') #jibran
-openai.api_key = os.environ.get('openaiii')
+openai.api_key = os.environ.get('openaii') #jibran
 
 
 story = """there was a boy whose name is jibran he is a mern stack developer"""

@@ -22,9 +22,7 @@ def answer_question(question):
         prompt=prompt,
         temperature=0.7,
         max_token=1000,
-        n=9,
-        stream=False,
-        stop=None,
+        
     )
 
  

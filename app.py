@@ -48,7 +48,7 @@ def ask_question():
     # question = data.get('question', '')
     # answer = answer_question(question)
     # return jsonify({ 'answer': answer})
-    return 'Server is running'
+    return jsonify ({'Server is running'})
  
 
 

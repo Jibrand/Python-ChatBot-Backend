@@ -42,7 +42,7 @@ def ask_question():
     data = request.get_json()
     question = data.get('question', '')
     answer = answer_question(question)
-    return jsonify({  answer})
+    return jsonify({ 'answer': answer})
  
 
 

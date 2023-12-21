@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
 import openai  # Import the OpenAI library
+import os
 
 app = Flask(__name__)
 
- 
-openai.api_key = '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'
+
+openai.api_key = os.environ.get('openaii')
+
 
 story = """there was a boy whose name is jibran he is a mern stack developer"""
  

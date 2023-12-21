@@ -4,7 +4,7 @@ import openai  # Import the OpenAI library
 app = Flask(__name__)
 
  
-openai.api_key = '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'
+openai.api_key = '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'
 
 story = """there was a boy whose name is jibran he is a mern stack developer"""
  

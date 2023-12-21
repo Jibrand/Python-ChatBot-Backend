@@ -28,6 +28,11 @@ def answer_question(question):
  
     answer = response.choices[0].text.strip()
 
+    prefixes_to_remove = ["?\n\nAnswer:", "?"]
+    for prefix in prefixes_to_remove:
+        if answer.startswith(prefix):
+            answer = answer[len(prefix):].strip()
+
    
     return answer
 

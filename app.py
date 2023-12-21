@@ -44,11 +44,10 @@ def start():
 
 @app.route('/ask', methods=['POST'])
 def ask_question():
-    # data = request.get_json()
-    # question = data.get('question', '')
-    # answer = answer_question(question)
-    # return jsonify({ 'answer': answer})
-    return jsonify ({'Server is running'})
+    data = request.get_json()
+    question = data.get('question', '')
+    answer = answer_question(question)
+    return jsonify({ 'answer': answer})
  
 
 

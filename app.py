@@ -154,7 +154,7 @@ def ask_question():
 def ask_question_webtose():
     data = request.get_json()
     question = data.get('question', '')
-    answer = answer_question(question)
+    answer = ask_question_webtose(question)
     return jsonify({ 'answer': answer})
 
 

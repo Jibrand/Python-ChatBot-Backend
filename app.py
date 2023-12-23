@@ -93,8 +93,7 @@ def answer_question(question):
     return answer
 
 def answer_question_webtose(question):
-    if question.lower() == "hey" or question == "hey"  :
-        return "Welcome to our website! How may I help you?"
+  
     
     prompt = f"The story is: {story1}\nQuestion: {question}"
 

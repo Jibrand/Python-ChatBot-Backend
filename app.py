@@ -9,7 +9,7 @@ CORS(app)
 openai.api_key = os.environ.get('openaii') #jibran
 
 
- story1 = """
+story1 = """
 name of company is WebTose 
 Welcome to WebTose – Where Digital Dreams Come to Life!
 
@@ -67,7 +67,10 @@ Ready to take your social media presence to the next level? Contact The IK Agenc
 """
  
 def answer_question(question):
-    
+    if question.lower() == "hey":
+        return "Welcome to our website! How may I help you?"
+    elif "how are you" in question.lower():
+        return "I'm just a computer program, but thanks for asking!" 
     prompt = f"The story is: {story}\nQuestion: {question}"
 
    

@@ -9,7 +9,7 @@ CORS(app)
 openai.api_key = os.environ.get('openaii') #jibran
 
 
-story1 = """
+story = """
 name of company is WebTose 
 Welcome to WebTose – Where Digital Dreams Come to Life.
 
@@ -38,7 +38,7 @@ Ready to embark on a digital adventure? Contact WebTose today for a consultation
 """
 
  
-story = """
+story1 = """
 Welcome to The IK Agency, your premier partner for cutting-edge Social Media Marketing and Management (SMMA) services. 
 At The IK Agency, we pride ourselves on delivering innovative solutions to enhance your online presence, engage your audience, and drive measurable results.
 

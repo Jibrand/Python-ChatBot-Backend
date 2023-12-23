@@ -11,7 +11,7 @@ openai.api_key = os.environ.get('openaii') #jibran
 
 story1 = """
 name of company is WebTose 
-Welcome to WebTose – Where Digital Dreams Come to Life!
+Welcome to WebTose – Where Digital Dreams Come to Life.
 
 In the heart of innovation, WebTose stands as a beacon for businesses seeking unparalleled excellence in website development and AI chatbot services. Let us take you on a journey of digital transformation, where your ideas evolve into captivating online experiences.
 

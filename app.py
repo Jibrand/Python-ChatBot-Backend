@@ -99,7 +99,7 @@ def ask_question_webtose(question):
         return "Welcome to our website! How may I help you?"
     elif "how are you" in question.lower():
         return "I'm just a computer program, but thanks for asking!" 
-    prompt = f"The story is: {story}\nQuestion: {question}"
+    prompt = f"The story1 is: {story}\nQuestion: {question}"
 
    
     response = openai.Completion.create(

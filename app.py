@@ -58,9 +58,25 @@ def answer_question(question):
     for prefix in prefixes_to_remove:
         if answer.startswith(prefix):
             answer = answer[len(prefix):].strip()
+    if not answer:
+        answer = generate_gpt_response(question)     
 
    
     return answer
+ 
+def generate_gpt_response(question):
+    # You can use the GPT-3.5 model here to generate a response for the question
+    # You may need to adapt this part based on your GPT-3.5 implementation
+    # For simplicity, you can use OpenAI's GPT-3 Python library
+    gpt_response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=question,
+        temperature=0.7,
+        max_tokens=1000
+    )
+
+    return gpt_response.choices[0].text.strip()
+
 
  
 @app.route('/', methods=['GET'])

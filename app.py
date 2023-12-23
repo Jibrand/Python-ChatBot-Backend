@@ -93,6 +93,34 @@ def answer_question(question):
 
    
     return answer
+
+def ask_question_webtose(question):
+    if question.lower() == "hey":
+        return "Welcome to our website! How may I help you?"
+    elif "how are you" in question.lower():
+        return "I'm just a computer program, but thanks for asking!" 
+    prompt = f"The story is: {story}\nQuestion: {question}"
+
+   
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        temperature=0.7,
+        max_tokens=1000
+    )
+
+ 
+    answer = response.choices[0].text.strip()
+
+    prefixes_to_remove = ["?\n\nAnswer:", "?"]
+    for prefix in prefixes_to_remove:
+        if answer.startswith(prefix):
+            answer = answer[len(prefix):].strip()
+    if not answer:
+        answer = generate_gpt_response(question)     
+
+   
+    return answer
  
 def generate_gpt_response(question):
     # You can use the GPT-3.5 model here to generate a response for the question
@@ -122,7 +150,12 @@ def ask_question():
     return jsonify({ 'answer': answer})
  
 
-
+@app.route('/webtose', methods=['POST'])
+def ask_question_webtose():
+    data = request.get_json()
+    question = data.get('question', '')
+    answer = answer_question(question)
+    return jsonify({ 'answer': answer})
 
 
  

@@ -67,10 +67,7 @@ Ready to take your social media presence to the next level? Contact The IK Agenc
 """
  
 def answer_question(question):
-    if "hey" in question.lower():
-        return "Welcome to our website! How may I help you?"
-    elif "how are you" in question.lower():
-        return "I'm just a computer program, but thanks for asking!" 
+  
      
     prompt = f"The story is: {story}\nQuestion: {question}"
 
@@ -96,10 +93,9 @@ def answer_question(question):
     return answer
 
 def answer_question_webtose(question):
-    if question.lower() == "hey":
+    if question.lower() == "hey" or question == "hey"  :
         return "Welcome to our website! How may I help you?"
-    elif "how are you" in question.lower():
-        return "I'm just a computer program, but thanks for asking!" 
+    
     prompt = f"The story is: {story1}\nQuestion: {question}"
 
    

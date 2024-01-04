@@ -217,7 +217,7 @@ def answer_question(question):
 
 
 
-def answer_question_wordpress(question):
+def legacy_answer_question(question):
   
      
     prompt = f"The story is: {story3}\nQuestion: {question}"
@@ -304,12 +304,14 @@ def ask_question_webtose():
     answer = answer_question_webtose(question)
     return jsonify({ 'answer': answer})
 
+
 @app.route('/legacy', methods=['POST'])
-def answer_question_wordpress():
+def legacy_answer_question1():
     data = request.get_json()
     question = data.get('question', '')
-    answer = answer_question_wordpress(question)
-    return jsonify({ 'answer': answer})
+    answer = legacy_answer_question(question)
+    return jsonify({'answer': answer})
+
  
 # from flask import Flask
 

@@ -217,12 +217,34 @@ def answer_question(question):
 
 
 
-def legacy_answer_question(question):
+# def legacy_answer_question(question):
   
      
-    prompt = f"The story is: {story3}\nQuestion: {question}"
+#     prompt = f"The story is: {story3}\nQuestion: {question}"
 
    
+#     response = openai.Completion.create(
+#         model="text-davinci-003",
+#         prompt=prompt,
+#         temperature=0.7,
+#         max_tokens=1000
+#     )
+
+ 
+#     answer = response.choices[0].text.strip()
+
+#     prefixes_to_remove = ["?\n\nAnswer:", "?"]
+#     for prefix in prefixes_to_remove:
+#         if answer.startswith(prefix):
+#             answer = answer[len(prefix):].strip()
+#     if not answer:
+#         answer = generate_gpt_response(question)     
+
+   
+#     return answer
+def legacy_answer_question(question):
+    prompt = f"The story is: {story3}\nQuestion: {question}"
+
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt,
@@ -230,18 +252,19 @@ def legacy_answer_question(question):
         max_tokens=1000
     )
 
- 
     answer = response.choices[0].text.strip()
 
-    prefixes_to_remove = ["?\n\nAnswer:", "?"]
-    for prefix in prefixes_to_remove:
-        if answer.startswith(prefix):
-            answer = answer[len(prefix):].strip()
-    if not answer:
-        answer = generate_gpt_response(question)     
+    keywords = ["Answer ?", "Answer:", "Answer"]
+    
+    for keyword in keywords:
+        if keyword in answer:
+            answer = answer.split(keyword, 1)[-1].strip()
 
-   
+    if not answer:
+        answer = generate_gpt_response(question)
+
     return answer
+
 
 def answer_question_webtose(question):
   

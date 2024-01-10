@@ -43,8 +43,8 @@ def answer_question_webtose(question):
     global conversation_history
     prompt = f"The story is: {story1}\nConversation History: {conversation_history}\nQuestion: {question}"
 
-    response = openai.Completion.create(
-        model="text-davinci-003",
+    response = openai.completions.create(
+        model="gpt-3.5-turbo-instruct",
         prompt=prompt,
         temperature=0.7,
         max_tokens=1000

@@ -82,7 +82,7 @@ def start():
     return 'Server is running'
 
 
- @app.route('/webtose', methods=['POST'])
+@app.route('/webtose', methods=['POST'])
 def ask_question_webtose():
     try:
         data = request.get_json()

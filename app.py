@@ -82,12 +82,15 @@ def start():
     return 'Server is running'
 
 
-@app.route('/webtose', methods=['POST'])
+ @app.route('/webtose', methods=['POST'])
 def ask_question_webtose():
-    data = request.get_json()
-    question = data.get('question', '')
-    answer = answer_question_webtose(question)
-    return jsonify({ 'answer': answer})
+    try:
+        data = request.get_json()
+        question = data.get('question', '')
+        answer = answer_question_webtose(question)
+        return jsonify({'answer': answer})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 # from flask import Flask

@@ -1,4 +1,4 @@
- from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify
 import openai  # Import the OpenAI library
 from flask_cors import CORS 
 import os
@@ -40,6 +40,7 @@ Ready to embark on a digital adventure? Contact WebTose today for a consultation
 """
 
 def answer_question_webtose(question):
+    global conversation_history
     prompt = f"The story is: {story1}\nConversation History: {conversation_history}\nQuestion: {question}"
 
     response = openai.Completion.create(
@@ -57,7 +58,10 @@ def answer_question_webtose(question):
             answer = answer[len(prefix):].strip()
     if not answer:
         answer = generate_gpt_response(question)     
-   
+    
+ 
+    conversation_history += f"\nUser: {question}\nAI: {answer}"
+
     return answer
 
  

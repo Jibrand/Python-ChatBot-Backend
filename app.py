@@ -41,7 +41,7 @@ Ready to embark on a digital adventure? Contact WebTose today for a consultation
 
 def answer_question_webtose(question):
   
-   prompt = f"The story is: {story1}\nConversation History: {conversation_history}\nQuestion: {question}"
+    prompt = f"The story is: {story1}\nConversation History: {conversation_history}\nQuestion: {question}"
 
     response = openai.Completion.create(
         model="text-davinci-003",

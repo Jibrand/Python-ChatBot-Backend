@@ -6,8 +6,8 @@ import os
 app = Flask(__name__)
 CORS(app) 
 
-# openai.api_key = os.environ.get('openaii') #jibran
-openai.api_key = "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"
+openai.api_key = os.environ.get('openaii') #jibran
+# openai.api_key = "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"
 
 
 conversation_history = "" 

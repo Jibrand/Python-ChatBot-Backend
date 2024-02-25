@@ -1,4 +1,9 @@
-Flask
 Gunicorn
 openai
-flask_cors
+Flask==2.0.3
+pymongo==4.0.1
+langchain-community==0.0.9
+langchain-openai==0.0.15
+bson==0.5.10
+Flask-Cors==3.1.1
+

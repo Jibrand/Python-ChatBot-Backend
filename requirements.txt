@@ -1,9 +1,6 @@
-Gunicorn
-openai
-Flask
-pymongo
-langchain-community
-langchain-openai
-bson
-Flask-Cors
-
+Flask==2.0.3
+pymongo==4.0.1
+langchain-community==0.0.9
+langchain-openai==0.0.8rc1  # Update version if needed
+bson==1.2.5  # Specify a compatible version
+Flask-Cors==3.1.1

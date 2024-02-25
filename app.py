@@ -113,7 +113,7 @@ import os
 from flask_cors import CORS  # Import CORS
 
 
-os.environ["OPENAI_API_KEY"] = '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'
+os.environ["OPENAI_API_KEY"] = 'xz'
 
 app = Flask(__name__)
 CORS(app)

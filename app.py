@@ -99,8 +99,15 @@
 # #if __name__ == '__main__':
 #     #app.run(debug=True)
 
+ 
 
 
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000)
+
+import io
+import base64
+import os
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from langchain_community.vectorstores import MongoDBAtlasVectorSearch
@@ -109,11 +116,12 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from langchain_openai import OpenAI
 from bson import json_util
-import os
-from flask_cors import CORS  # Import CORS
+from langchain_community.document_loaders import PyPDFLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from flask_cors import CORS
 
-
-os.environ["OPENAI_API_KEY"] = 'xz'
+api=os.environ.get('openaiii')
+os.environ["OPENAI_API_KEY"] = api
 
 app = Flask(__name__)
 CORS(app)
@@ -140,9 +148,7 @@ qa_retriever = vector_search.as_retriever(
 
 # Prompt Template
 prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know only, don't try to make up an answer. if you questioned about your name tell Your name is AI Banker only dont tell you dont have name
-
 {context}
-
 Question: "{question}"
 """
 
@@ -168,14 +174,55 @@ def chat():
     docs = qa({"query": query})
 
     # Convert the Document object to JSON serializable format
-    print (data)
-    print (query)
-    print(docs["result"])
     return jsonify(docs["result"])
 
+@app.route('/process_pdf', methods=['POST'])
+def process_pdf():
+    data = request.get_json()
+    if 'pdf_base64' not in data:
+        return jsonify({'error': 'No PDF data found'})
 
+    pdf_base64 = data['pdf_base64']
+
+    # Decode base64 to bytes
+    pdf_bytes = base64.b64decode(pdf_base64)
+
+    # Save PDF bytes to a temporary file
+    temp_pdf_path = 'temp.pdf'
+    with open(temp_pdf_path, 'wb') as temp_pdf:
+        temp_pdf.write(pdf_bytes)
+
+    # Load the PDF from the temporary file
+    loader = PyPDFLoader(temp_pdf_path)
+    pdf_data = loader.load()
+
+    # Split the document
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
+    docs = text_splitter.split_documents(pdf_data)
+
+    # Insert documents into MongoDB with embeddings
+    try:
+        vector_search_instance = MongoDBAtlasVectorSearch.from_documents(
+            documents=docs,
+            embedding=OpenAIEmbeddings(disallowed_special=()),
+            collection=MONGODB_COLLECTION,
+            index_name=ATLAS_VECTOR_SEARCH_INDEX_NAME,
+        )
+    except Exception as e:
+        # Handle specific errors
+        error_message = str(e)
+        return jsonify({'error': error_message}), 500
+
+    # Remove the temporary file
+    os.remove(temp_pdf_path)
+
+    return jsonify({'message': 'PDF processed and inserted into MongoDB with embeddings!'})
+
+    
+@app.route('/', methods=['GET'])
+def home():
+    return "Server is running"
 
 # if __name__ == '__main__':
-#     app.run(host='0.0.0.0', port=5000)
-
+#     app.run()
 

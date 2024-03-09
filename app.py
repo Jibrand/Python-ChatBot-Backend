@@ -105,6 +105,9 @@
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', port=5000)
 
+
+
+
 import io
 import base64
 import os
@@ -119,9 +122,9 @@ from bson import json_util
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from flask_cors import CORS
+from bson import ObjectId
 
-api=os.environ.get('openaiii')
-os.environ["OPENAI_API_KEY"] = api
+os.environ["OPENAI_API_KEY"] = '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'
 
 app = Flask(__name__)
 CORS(app)
@@ -162,6 +165,9 @@ qa = RetrievalQA.from_chain_type(
     # return_source_documents=True,
     chain_type_kwargs={"prompt": PROMPT},
 )
+
+# List to store previous _id values
+previous_ids = []
 
 # API Endpoint for chat
 @app.route('/chat', methods=['POST'])
@@ -213,16 +219,41 @@ def process_pdf():
         error_message = str(e)
         return jsonify({'error': error_message}), 500
 
-    # Remove the temporary file
+    # Retrieve the _id of the previous document
+    previous_ids = []
+    previous_document = MONGODB_COLLECTION.find().sort('_id', -1).limit(1)
+    for doc in previous_document:
+      previous_id = str(doc['_id'])  # Convert ObjectId to string
+      previous_ids.append(previous_id)
+      print(previous_id)
+  
+# Remove the temporary file
     os.remove(temp_pdf_path)
 
-    return jsonify({'message': 'PDF processed and inserted into MongoDB with embeddings!'})
+# Return JSON response
+    return jsonify({'message': 'PDF processed and inserted into MongoDB with embeddings!', 'previous_id': previous_ids[0]})
 
-    
+@app.route('/delete_all_documents', methods=['DELETE'])
+def delete_all_documents():
+    try:
+        # Delete all documents from the 'document' collection
+        result = MONGODB_COLLECTION.delete_many({})
+        deleted_count = result.deleted_count
+        return jsonify({'message': f'Deleted {deleted_count} documents from {COLLECTION_NAME} collection'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/display_previous_ids', methods=['GET'])
+def display_previous_ids():
+    # Display the list of previous _id values in the console
+    print("Previous _id values:", previous_ids)
+    return jsonify({'previous_ids': previous_ids})
+
 @app.route('/', methods=['GET'])
 def home():
     return "Server is running"
 
 # if __name__ == '__main__':
 #     app.run()
+
 

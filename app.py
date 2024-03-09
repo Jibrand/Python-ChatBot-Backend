@@ -124,7 +124,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from flask_cors import CORS
 from bson import ObjectId
 
-os.environ["OPENAI_API_KEY"] = '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'
+api=os.environ.get('openaiii')
 
 app = Flask(__name__)
 CORS(app)

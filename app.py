@@ -150,7 +150,7 @@ qa_retriever = vector_search.as_retriever(
 )
 
 # Prompt Template
-prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know only, don't try to make up an answer. if you questioned about your name tell Your name is AI Banker only dont tell you dont have name
+prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know only, don't try to make up an answer. Please give the response of 1 line only. if question is not found in context, just say "I am sorry".
 {context}
 Question: "{question}"
 """

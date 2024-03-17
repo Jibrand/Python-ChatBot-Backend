@@ -105,14 +105,13 @@
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', port=5000)
 
-
-
-
 import io
 import base64
 import os
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
+import wave
+import asyncio
 from langchain_community.vectorstores import MongoDBAtlasVectorSearch
 from langchain_openai import OpenAIEmbeddings
 from langchain.prompts import PromptTemplate
@@ -123,11 +122,21 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from flask_cors import CORS
 from bson import ObjectId
+from deepgram import (
+    DeepgramClient,
+    PrerecordedOptions,
+    FileSource,
+)
 
-# api=os.environ.get('openaiii')
-os.environ.get('OPENAI_API_KEY')
+ 
+ 
+
+os.environ["OPENAI_API_KEY"] = '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'
+
 app = Flask(__name__)
 CORS(app)
+ 
+
 
 # Set up MongoDB client and collection
 client = MongoClient('mongodb+srv://jibran:jibranmern@clusterone.u74t8kf.mongodb.net/?retryWrites=true&w=majority')
@@ -150,7 +159,7 @@ qa_retriever = vector_search.as_retriever(
 )
 
 # Prompt Template
-prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know only, don't try to make up an answer. Please give the response of 1 line only. if question is not found in context, just say "I am sorry".
+prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know only, don't try to make up an answer. -Importtant:Please give the response of 1 line only for all questions. if answer is not found in context, just say "I am sorry".
 {context}
 Question: "{question}"
 """
@@ -158,6 +167,7 @@ Question: "{question}"
 PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
 # Initialize QA Chain
+
 qa = RetrievalQA.from_chain_type(
     llm=OpenAI(),
     chain_type="stuff",
@@ -256,4 +266,4 @@ def home():
 # if __name__ == '__main__':
 #     app.run()
 
-
+ 

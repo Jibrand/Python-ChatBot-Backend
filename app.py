@@ -130,11 +130,10 @@ from deepgram import (
 
  
  
-
-os.environ["OPENAI_API_KEY"] = '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'
-
+os.environ.get('OPENAI_API_KEY')
 app = Flask(__name__)
 CORS(app)
+ 
  
 
 

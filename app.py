@@ -98,6 +98,14 @@
 
 # #if __name__ == '__main__':
 #     #app.run(debug=True)
+
+
+
+
+
+
+
+
 import io
 import base64
 import os
@@ -116,12 +124,11 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from flask_cors import CORS
 from bson import ObjectId
  
+
+ 
  
 
-
-    
 os.environ.get('OPENAI_API_KEY')
-
 app = Flask(__name__)
 CORS(app)
  
@@ -129,7 +136,7 @@ CORS(app)
 
 # Set up MongoDB client and collection
 client = MongoClient('mongodb+srv://jibran:jibranmern@clusterone.u74t8kf.mongodb.net/?retryWrites=true&w=majority')
-DB_NAME = "AIBanker"
+DB_NAME = "test"
 COLLECTION_NAME = "document"
 ATLAS_VECTOR_SEARCH_INDEX_NAME = "vector_index"
 MONGODB_COLLECTION = client[DB_NAME][COLLECTION_NAME]
@@ -148,20 +155,16 @@ qa_retriever = vector_search.as_retriever(
 )
 
 # Prompt Template
-# prompt_template = """Use the following pieces of context to answer the question at 
-# the end. If you don't know the answer, just say that you don't know only, don't try to make up an answer. 
-# -Importtant:Please give the response of 1 line only for, . if answer is not found in context, try to get relavent
-#  answer but it should be from context, not from all over the world, you can also suggest the user 
-#  that are you asking for this you are AI Banker".
-
 prompt_template = """Please utilize the provided context to answer the question below. If the answer is 
 not available within the context, provide a relevant response based solely on the provided information. 
 Refrain from inventing answers. If uncertain, simply state "I don't know". 
 -Important: Kindly limit your response to one line only. Additionally, if necessary, you may remind the user 
-that you are an AI Banker and suggest narrowing the question within the given context. Greet the user like human if they greet you."
+that you are an AI Banker and suggest narrowing the question within the given context. Greet the user like human if they greet you.
+And here is the history of all the previous conversation make sure to give answer related to this, in this role ai
+is the bot response and role user is the question asked from user previously so it is jus history"
 
 {context}
-Question: "{question}"
+Question: "{question}. "
 """
 
 PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
@@ -263,29 +266,5 @@ def display_previous_ids():
 def home():
     return "Server is running"
 
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-# if __name__ == '__main__':
-#     app.run()
+if __name__ == '__main__':
+    app.run()

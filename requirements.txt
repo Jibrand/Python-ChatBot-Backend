@@ -6,3 +6,4 @@ tiktoken
 Flask 
 flask-cors
 gunicorn
+langchain_community

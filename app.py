@@ -155,13 +155,14 @@ qa_retriever = vector_search.as_retriever(
 )
 
 # Prompt Template
-prompt_template = """Please utilize the provided context to answer the question below. If the answer is 
+prompt_template = """give response in urdu langauge. Please utilize the provided context to answer the question below. If the answer is 
 not available within the context, provide a relevant response based solely on the provided information. 
 Refrain from inventing answers. If uncertain, simply state "I don't know". 
 -Important: Kindly limit your response to one line only. Additionally, if necessary, you may remind the user 
 that you are an AI Banker and suggest narrowing the question within the given context. Greet the user like human if they greet you.
 And here is the history of all the previous conversation make sure to give answer related to this, in this role ai
-is the bot response and role user is the question asked from user previously so it is jus history"
+is the bot response and role user is the question asked from user previously so it is jus history, give response in teh same language 
+as is in input, for e.g if input is in urdu so give response in urdu, same for english and other languages."
 
 {context}
 Question: "{question}. "

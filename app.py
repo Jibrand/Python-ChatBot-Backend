@@ -151,7 +151,7 @@ vector_search = MongoDBAtlasVectorSearch(
 # Initialize QA Retriever
 qa_retriever = vector_search.as_retriever(
     search_type="similarity",
-    search_kwargs={"k": 25},
+    search_kwargs={"k": 5},
 )
 
 # Prompt Template
